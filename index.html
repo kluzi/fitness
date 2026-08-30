@@ -36,10 +36,15 @@
   body{padding-bottom:104px;min-height:100vh;}
   .wrap{max-width:560px;margin:0 auto;padding:14px 14px 8px;}
   header.top{max-width:560px;margin:0 auto;padding:16px 14px 0;}
-  .brand-tag{font-size:0.72rem;font-weight:700;letter-spacing:0.02em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:6px;}
+  .brand-tag{display:inline-flex;align-items:center;gap:6px;font-size:0.72rem;font-weight:700;
+    letter-spacing:0.02em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:6px;}
+
+  .icon{display:block;}
+  svg.icon{overflow:visible;}
 
   .card{background:var(--surface);border-radius:var(--r-lg);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);}
-  .card h2{font-size:1.02rem;margin:0 0 10px;font-weight:800;}
+  .card h2{font-size:1.02rem;margin:0 0 10px;font-weight:800;display:flex;align-items:center;gap:7px;}
+  .card h2 svg{width:18px;height:18px;flex-shrink:0;}
   .muted{color:var(--ink-dim);font-size:0.85rem;}
 
   /* header card */
@@ -54,7 +59,8 @@
     display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:800;color:var(--ink);}
   .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
   .pill{background:var(--surface-2);border-radius:var(--r-pill);padding:7px 13px;font-size:0.76rem;
-    color:var(--ink-dim);font-weight:600;display:flex;align-items:center;gap:6px;}
+    color:var(--ink-dim);font-weight:600;display:flex;align-items:center;gap:7px;}
+  .pill svg{width:14px;height:14px;flex-shrink:0;}
   .pill b{color:var(--ink);font-weight:800;}
 
   /* programme */
@@ -71,7 +77,8 @@
   .session-row{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--line);}
   .session-row:first-child{padding-top:0;border-top:none;}
   .session-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-    font-size:1.05rem;flex-shrink:0;}
+    flex-shrink:0;}
+  .session-icon svg{width:19px;height:19px;}
   .session-row-title{font-weight:700;font-size:0.88rem;}
   .session-row-sub{font-size:0.75rem;color:var(--ink-dim);margin-top:1px;line-height:1.35;}
 
@@ -79,26 +86,31 @@
   .segmented{display:flex;background:var(--surface-2);border-radius:var(--r-pill);padding:5px;gap:4px;margin-bottom:16px;}
   .seg-btn{flex:1;border:none;background:transparent;border-radius:var(--r-pill);padding:10px 4px;
     font-size:0.76rem;font-weight:700;color:var(--ink-dim);display:flex;flex-direction:column;
-    align-items:center;gap:3px;cursor:pointer;font-family:inherit;}
-  .seg-btn .seg-ic{font-size:1.15rem;}
+    align-items:center;gap:4px;cursor:pointer;font-family:inherit;}
+  .seg-btn .seg-ic svg{width:18px;height:18px;}
   .seg-btn.active{background:var(--ink);color:#fff;box-shadow:var(--shadow);}
 
   .warn-banner{background:var(--warn-bg);color:var(--warn-ink);border-radius:var(--r-md);
-    padding:12px 14px;font-size:0.82rem;font-weight:600;margin-bottom:14px;line-height:1.4;}
+    padding:12px 14px;font-size:0.82rem;font-weight:600;margin-bottom:14px;line-height:1.4;
+    display:flex;align-items:flex-start;gap:9px;}
+  .warn-banner svg{width:18px;height:18px;flex-shrink:0;margin-top:1px;}
 
   .exercise{background:var(--surface);border-radius:var(--r-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow);}
   .exercise.done{opacity:0.6;}
   .ex-head{display:flex;align-items:flex-start;gap:12px;}
   .ex-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-    font-size:1.1rem;flex-shrink:0;}
+    flex-shrink:0;}
+  .ex-icon svg{width:19px;height:19px;}
   .ex-info{flex:1;}
   .ex-name{font-weight:800;font-size:1rem;}
   .ex-group{color:var(--ink-dim);font-size:0.76rem;margin-top:1px;}
   .ex-check{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
-    display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:800;flex-shrink:0;}
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ex-check svg{width:13px;height:13px;}
   .ex-target-row{margin-top:10px;}
-  .ex-target-badge{display:inline-block;background:var(--surface-2);color:var(--ink);font-weight:700;
-    font-size:0.78rem;padding:6px 12px;border-radius:var(--r-pill);}
+  .ex-target-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);color:var(--ink);
+    font-weight:700;font-size:0.78rem;padding:6px 12px;border-radius:var(--r-pill);}
+  .ex-target-badge svg{width:14px;height:14px;flex-shrink:0;}
   .set-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;}
   .set-dots{display:flex;gap:7px;flex:1;flex-wrap:wrap;}
   .dot{width:30px;height:30px;border-radius:50%;background:var(--surface);border:2px solid var(--line);
@@ -106,26 +118,32 @@
     color:var(--ink-dim);cursor:pointer;user-select:none;flex-shrink:0;}
   .dot.filled{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);}
   .timer-btn{background:var(--ink);border:none;color:#fff;border-radius:var(--r-pill);padding:9px 14px;
-    font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;}
+    font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;
+    display:inline-flex;align-items:center;gap:7px;}
+  .timer-btn svg{width:14px;height:14px;flex-shrink:0;}
   .timer-btn:disabled{opacity:0.5;}
   .timer-display{font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;margin-left:2px;}
   .diff-row{display:flex;gap:8px;margin-top:12px;}
-  .diff-btn{flex:1;border:none;border-radius:var(--r-pill);padding:10px 4px;font-size:0.76rem;
-    cursor:pointer;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit;}
+  .diff-btn{flex:1;border:none;border-radius:var(--r-pill);padding:10px 4px;font-size:0.74rem;
+    cursor:pointer;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:inherit;}
+  .diff-btn .diff-ic svg{width:18px;height:18px;}
   .diff-facile{background:var(--ok-bg);color:var(--ok-ink);}
   .diff-parfait{background:var(--warn-bg);color:var(--warn-ink);}
   .diff-dur{background:var(--bad-bg);color:var(--bad-ink);}
   .diff-btn.picked{box-shadow:inset 0 0 0 2px currentColor;}
 
   .finish-btn{width:100%;background:var(--ink);border:none;color:#fff;font-weight:800;padding:16px;
-    border-radius:var(--r-pill);font-size:0.95rem;cursor:pointer;margin-top:6px;font-family:inherit;}
+    border-radius:var(--r-pill);font-size:0.95rem;cursor:pointer;margin-top:6px;font-family:inherit;
+    display:flex;align-items:center;justify-content:center;gap:8px;}
+  .finish-btn svg{width:17px;height:17px;}
   .finish-btn:disabled{background:var(--surface-2);color:var(--ink-dim);cursor:not-allowed;}
 
   /* progression */
   .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
   .stat-card{background:var(--surface);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow);}
   .stat-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-    font-size:0.95rem;margin-bottom:10px;}
+    margin-bottom:10px;}
+  .stat-ic svg{width:17px;height:17px;}
   .stat-num{font-size:1.3rem;font-weight:800;letter-spacing:-0.01em;}
   .stat-lbl{font-size:0.72rem;color:var(--ink-dim);font-weight:600;margin-top:2px;}
 
@@ -144,22 +162,25 @@
     width:78px;font-size:0.64rem;font-weight:700;color:var(--ink-dim);}
   .badge.unlocked{color:var(--ink);}
   .badge .ic{width:36px;height:36px;border-radius:50%;background:var(--surface);display:flex;
-    align-items:center;justify-content:center;font-size:1.25rem;margin:0 auto 6px;opacity:0.4;filter:grayscale(1);}
-  .badge.unlocked .ic{opacity:1;filter:none;background:var(--accent);}
+    align-items:center;justify-content:center;margin:0 auto 6px;opacity:0.4;}
+  .badge .ic svg{width:19px;height:19px;}
+  .badge.unlocked .ic{opacity:1;background:var(--accent);color:var(--accent-ink);}
 
   .hist-item{display:flex;align-items:center;gap:9px;padding:10px 0;border-top:1px solid var(--line);font-size:0.82rem;}
   .hist-item:first-child{border-top:none;}
   .hist-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
   .hist-item .d1{color:var(--ink-dim);font-weight:600;font-size:0.76rem;min-width:78px;}
-  .hist-item .d2{font-weight:600;}
+  .hist-item .d2{font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .hist-diffs{display:inline-flex;gap:3px;}
+  .hist-diffs svg{width:13px;height:13px;}
 
   nav.bottom{position:fixed;bottom:14px;left:14px;right:14px;max-width:532px;margin:0 auto;
     background:var(--surface);border-radius:var(--r-pill);box-shadow:var(--shadow);
     display:flex;padding:6px;z-index:50;}
   nav.bottom button{flex:1;background:none;border:none;color:var(--ink-dim);padding:10px 4px;
     font-size:0.68rem;font-weight:700;border-radius:var(--r-pill);display:flex;flex-direction:column;
-    align-items:center;gap:3px;cursor:pointer;font-family:inherit;}
-  nav.bottom button .ic{font-size:1.2rem;}
+    align-items:center;gap:4px;cursor:pointer;font-family:inherit;}
+  nav.bottom button .ic svg{width:19px;height:19px;}
   nav.bottom button.active{background:var(--ink);color:#fff;}
 
   .view{display:none;}
@@ -173,7 +194,7 @@
 <body>
 
 <header class="top">
-  <div class="brand-tag">💪 Muscu Plan</div>
+  <div class="brand-tag"><span id="icBrand"></span>Muscu Plan</div>
 </header>
 
 <div class="wrap">
@@ -205,15 +226,15 @@
   <section id="view-progression" class="view">
     <div class="stat-grid" id="statGrid"></div>
     <div class="card">
-      <h2>📊 Séances / semaine</h2>
+      <h2><span id="icBars"></span>Séances / semaine</h2>
       <div class="bars" id="barsChart"></div>
     </div>
     <div class="card">
-      <h2>🏅 Badges</h2>
+      <h2><span id="icBadges"></span>Badges</h2>
       <div class="badges" id="badgesRow"></div>
     </div>
     <div class="card">
-      <h2>🗂️ Historique</h2>
+      <h2><span id="icHistory"></span>Historique</h2>
       <div id="historyList"></div>
     </div>
     <button class="reset-btn" id="resetBtn">Réinitialiser toutes les données</button>
@@ -222,14 +243,49 @@
 </div>
 
 <nav class="bottom">
-  <button data-view="programme" class="navbtn"><span class="ic">📅</span>Programme</button>
-  <button data-view="seance" class="navbtn"><span class="ic">🏋️</span>Séance</button>
-  <button data-view="progression" class="navbtn"><span class="ic">📈</span>Progression</button>
+  <button data-view="programme" class="navbtn"><span class="ic" id="navIcProgramme"></span>Programme</button>
+  <button data-view="seance" class="navbtn"><span class="ic" id="navIcSeance"></span>Séance</button>
+  <button data-view="progression" class="navbtn"><span class="ic" id="navIcProgression"></span>Progression</button>
 </nav>
 
 <script>
 (function(){
 "use strict";
+
+/* ---------------------------------------------------------------
+   ICÔNES (SVG inline, dessinées maison — style trait fin/plein)
+--------------------------------------------------------------- */
+const ICONS = {
+  dumbbell: '<rect x="1.6" y="9" width="3" height="6" rx="1"/><rect x="19.4" y="9" width="3" height="6" rx="1"/><rect x="4.8" y="10.4" width="3.6" height="3.2" rx="0.6"/><rect x="15.6" y="10.4" width="3.6" height="3.2" rx="0.6"/><rect x="6.5" y="11.1" width="11" height="1.8" rx="0.9"/>',
+  flag: '<line x1="6" y1="3" x2="6" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7.6 4.6 L19 4.6 L15.8 8 L19 11.4 L7.6 11.4 Z"/>',
+  flame: '<path d="M12 3c.8 2.4-.6 3.9-1.8 5.3C9 9.7 8 11.1 8 13a4 4 0 0 0 8 0c0-1.1-.3-2-.8-2.7-.2.7-.6 1.3-1.2 1.6.3-.8.2-1.7-.2-2.4-.7-1.2-1.6-2.2-1.8-3.5-.9 1-2 2-2 3.4 0 .5.1.9.4 1.3-.8-.5-1.3-1.3-1.4-2.2C8.8 6.9 10.4 4.9 12 3Z"/>',
+  checkCircle: '<circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.3l2.6 2.6L16.3 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  checkMark: '<polyline points="5,12.5 9.5,17 19,7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+  star: '<path d="M12 2 L15 9 L22 12 L15 15 L12 22 L9 15 L2 12 L9 9 Z"/>',
+  alert: '<path d="M12 3.5 L21 19.5 L3 19.5 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="12" y1="9.5" x2="12" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/>',
+  calendar: '<rect x="3.5" y="5.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="3.5" y1="10" x2="20.5" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="8" y1="3.5" x2="8" y2="7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="3.5" x2="16" y2="7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  trending: '<polyline points="4,17 9,11 13,14 20,6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="14,6 20,6 20,12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  award: '<circle cx="12" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3"/><path d="M8.5 14 L6 21 L12 18 L18 21 L15.5 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>',
+  target: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5.3" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1.6"/>',
+  clock: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="12" y1="12" x2="12" y2="7.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="12" x2="15.5" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  chevronsUp: '<polyline points="6,13.5 12,7.5 18,13.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><polyline points="6,19 12,13 18,19" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>',
+  chevronsDown: '<polyline points="6,10.5 12,16.5 18,10.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><polyline points="6,5 12,11 18,5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>',
+  chevronsLeft: '<polyline points="13.5,6 7.5,12 13.5,18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><polyline points="19,6 13,12 19,18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>',
+  folder: '<path d="M4 7.2c0-1 .8-1.8 1.8-1.8h3.6l1.6 1.8H18c1 0 1.8.8 1.8 1.8v9.2c0 1-.8 1.8-1.8 1.8H5.8c-1 0-1.8-.8-1.8-1.8V7.2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
+  barChart: '<rect x="4" y="12" width="3.4" height="8" rx="1"/><rect x="10.3" y="6" width="3.4" height="14" rx="1"/><rect x="16.6" y="9" width="3.4" height="11" rx="1"/>',
+};
+function icon(name){
+  return `<svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${ICONS[name]||''}</svg>`;
+}
+function mountStaticIcons(){
+  document.getElementById('icBrand').innerHTML = icon('dumbbell');
+  document.getElementById('navIcProgramme').innerHTML = icon('calendar');
+  document.getElementById('navIcSeance').innerHTML = icon('dumbbell');
+  document.getElementById('navIcProgression').innerHTML = icon('trending');
+  document.getElementById('icBars').innerHTML = icon('barChart');
+  document.getElementById('icBadges').innerHTML = icon('award');
+  document.getElementById('icHistory').innerHTML = icon('folder');
+}
 
 /* ---------------------------------------------------------------
    DONNÉES DU PROGRAMME
@@ -318,7 +374,7 @@ const SESSION_LABELS = {
   B:'Jambes light + gainage',
   C:'Haut du corps (tirage) + full body',
 };
-const SESSION_ICONS = { A:'💥', B:'🦵', C:'⬅️' };
+const SESSION_ICON_KEY = { A:'chevronsUp', B:'chevronsDown', C:'chevronsLeft' };
 const SESSION_STYLE = {
   A:{ bg:'#FFE4D6', ink:'#E1592E', short:'Poussée' },
   B:{ bg:'#DFF3D2', ink:'#3E8E41', short:'Jambes'  },
@@ -326,12 +382,23 @@ const SESSION_STYLE = {
 };
 
 const BADGE_DEFS = [
-  { id:'b1', ic:'🥉', label:'Bloc 1', need:10 },
-  { id:'b2', ic:'🥈', label:'Bloc 2', need:22 },
-  { id:'b3', ic:'🥇', label:'Bloc 3', need:34 },
-  { id:'b4', ic:'🏆', label:'Bloc 4', need:46 },
-  { id:'streak4', ic:'🔥', label:'4 sem. suivies', need:null },
+  { id:'b1', icon:'award', label:'Bloc 1', need:10 },
+  { id:'b2', icon:'award', label:'Bloc 2', need:22 },
+  { id:'b3', icon:'award', label:'Bloc 3', need:34 },
+  { id:'b4', icon:'award', label:'Bloc 4', need:46 },
+  { id:'streak4', icon:'flame', label:'4 sem. suivies', need:null },
 ];
+
+const DIFF_META = {
+  facile:  { icon:'checkCircle', label:'Facile',  varInk:'var(--ok-ink)'   },
+  parfait: { icon:'star',        label:'Parfait', varInk:'var(--warn-ink)' },
+  dur:     { icon:'flame',       label:'Dur',      varInk:'var(--bad-ink)'  },
+};
+function diffIconHtml(d){
+  const m = DIFF_META[d];
+  if(!m) return '';
+  return `<span style="color:${m.varInk};display:inline-flex">${icon(m.icon)}</span>`;
+}
 
 /* ---------------------------------------------------------------
    STATE / PERSISTENCE
@@ -434,7 +501,7 @@ function renderHeader(){
     const d = daysBetween(todayStr(), race.date);
     const p = document.createElement('div');
     p.className='pill';
-    p.innerHTML = `🏁 <b>${race.name}</b> · dans ${d} j`;
+    p.innerHTML = `${icon('flag')}<span><b>${race.name}</b> · dans ${d} j</span>`;
     pills.appendChild(p);
   }
 }
@@ -478,7 +545,7 @@ function renderProgramme(){
       const row = document.createElement('div');
       row.className='session-row';
       row.innerHTML = `
-        <span class="session-icon" style="background:${sty.bg};color:${sty.ink}">${SESSION_ICONS[type]}</span>
+        <span class="session-icon" style="background:${sty.bg};color:${sty.ink}">${icon(SESSION_ICON_KEY[type])}</span>
         <div class="session-row-text">
           <div class="session-row-title">${type} · ${SESSION_LABELS[type]}</div>
           <div class="session-row-sub">${names}</div>
@@ -506,7 +573,7 @@ function renderSessionPicker(){
     const sty = SESSION_STYLE[type];
     const btn = document.createElement('button');
     btn.className = 'seg-btn' + (currentSessionType===type ? ' active' : '');
-    btn.innerHTML = `<span class="seg-ic">${SESSION_ICONS[type]}</span>${sty.short}`;
+    btn.innerHTML = `<span class="seg-ic">${icon(SESSION_ICON_KEY[type])}</span>${sty.short}`;
     btn.onclick = ()=>{ currentSessionType = type; sessionResults = {}; renderSeanceView(); };
     picker.appendChild(btn);
   });
@@ -520,7 +587,7 @@ function renderWarnBanner(){
   if(!race) return;
   const d = daysBetween(todayStr(), race.date);
   if(d>=0 && d<2){
-    el.innerHTML = `<div class="warn-banner">⚠️ ${race.name} dans ${d===0?"aujourd'hui":d+" j"} — séance jambes déconseillée à moins de 48h d'une sortie clé. Privilégie une séance A ou C.</div>`;
+    el.innerHTML = `<div class="warn-banner">${icon('alert')}<span>${race.name} dans ${d===0?"aujourd'hui":d+" j"} — séance jambes déconseillée à moins de 48h d'une sortie clé. Privilégie une séance A ou C.</span></div>`;
   }
 }
 
@@ -545,22 +612,22 @@ function renderExerciseList(){
 
     card.innerHTML = `
       <div class="ex-head">
-        <span class="ex-icon" style="background:${sty.bg};color:${sty.ink}">${SESSION_ICONS[currentSessionType]}</span>
+        <span class="ex-icon" style="background:${sty.bg};color:${sty.ink}">${icon(SESSION_ICON_KEY[currentSessionType])}</span>
         <div class="ex-info">
           <div class="ex-name">${def.name}</div>
           <div class="ex-group">${def.group} · ${variantLabel}</div>
         </div>
-        ${done ? '<div class="ex-check">✓</div>' : ''}
+        ${done ? `<div class="ex-check">${icon('checkMark')}</div>` : ''}
       </div>
-      <div class="ex-target-row"><span class="ex-target-badge">🎯 ${targetLabel}</span></div>
+      <div class="ex-target-row"><span class="ex-target-badge">${icon('target')}<span>${targetLabel}</span></span></div>
       <div class="set-row">
         <div class="set-dots" data-ex="${entry.id}"></div>
-        ${def.type==='hold' ? `<button class="timer-btn" data-timer="${entry.id}">⏱ ${prog.target}s</button><span class="timer-display" data-timerdisplay="${entry.id}"></span>` : ''}
+        ${def.type==='hold' ? `<button class="timer-btn" data-timer="${entry.id}">${icon('clock')}<span>${prog.target}s</span></button><span class="timer-display" data-timerdisplay="${entry.id}"></span>` : ''}
       </div>
       <div class="diff-row" data-diff="${entry.id}">
-        <button class="diff-btn diff-facile" data-d="facile"><span>😌</span>Facile</button>
-        <button class="diff-btn diff-parfait" data-d="parfait"><span>👍</span>Parfait</button>
-        <button class="diff-btn diff-dur" data-d="dur"><span>😤</span>Dur</button>
+        <button class="diff-btn diff-facile" data-d="facile"><span class="diff-ic">${icon('checkCircle')}</span><span>Facile</span></button>
+        <button class="diff-btn diff-parfait" data-d="parfait"><span class="diff-ic">${icon('star')}</span><span>Parfait</span></button>
+        <button class="diff-btn diff-dur" data-d="dur"><span class="diff-ic">${icon('flame')}</span><span>Dur</span></button>
       </div>
     `;
     container.appendChild(card);
@@ -664,7 +731,9 @@ function updateFinishBtn(){
   const allDone = entries.every(e=> sessionResults[e.id] && sessionResults[e.id].difficulty);
   const btn = document.getElementById('finishBtn');
   btn.disabled = !allDone;
-  btn.textContent = allDone ? '🎉 Terminer la séance' : `Termine tous les exercices d'abord (${Object.values(sessionResults).filter(r=>r.difficulty).length}/${entries.length})`;
+  btn.innerHTML = allDone
+    ? `${icon('checkMark')}<span>Terminer la séance</span>`
+    : `<span>Termine tous les exercices d'abord (${Object.values(sessionResults).filter(r=>r.difficulty).length}/${entries.length})</span>`;
 }
 
 document.getElementById('finishBtn').addEventListener('click', ()=>{
@@ -739,22 +808,22 @@ function renderStatGrid(){
 
   grid.innerHTML = `
     <div class="stat-card">
-      <span class="stat-ic" style="background:#E6E1FB;color:#6C56D8">🏋️</span>
+      <span class="stat-ic" style="background:#E6E1FB;color:#6C56D8">${icon('dumbbell')}</span>
       <div class="stat-num">${total}</div>
       <div class="stat-lbl">Séances totales</div>
     </div>
     <div class="stat-card">
-      <span class="stat-ic" style="background:#DFF3D2;color:#3E8E41">✅</span>
+      <span class="stat-ic" style="background:#DFF3D2;color:#3E8E41">${icon('checkCircle')}</span>
       <div class="stat-num">${thisWeek}/3</div>
       <div class="stat-lbl">Cette semaine</div>
     </div>
     <div class="stat-card">
-      <span class="stat-ic" style="background:#FFF1CE;color:#A66A00">🔥</span>
+      <span class="stat-ic" style="background:#FFF1CE;color:#A66A00">${icon('flame')}</span>
       <div class="stat-num">${streak}</div>
       <div class="stat-lbl">Semaines à 3/3 d'affilée</div>
     </div>
     <div class="stat-card">
-      <span class="stat-ic" style="background:#FFE4D6;color:#E1592E">🏁</span>
+      <span class="stat-ic" style="background:#FFE4D6;color:#E1592E">${icon('flag')}</span>
       <div class="stat-num">${raceLbl}</div>
       <div class="stat-lbl">${raceName}</div>
     </div>
@@ -789,7 +858,7 @@ function renderBadges(){
     const unlocked = !!state.badges[bd.id];
     const el = document.createElement('div');
     el.className = 'badge' + (unlocked?' unlocked':'');
-    el.innerHTML = `<span class="ic">${bd.ic}</span>${bd.label}`;
+    el.innerHTML = `<span class="ic">${icon(bd.icon)}</span>${bd.label}`;
     row.appendChild(el);
   });
 }
@@ -805,13 +874,13 @@ function renderHistory(){
   sorted.slice(0,30).forEach(l=>{
     const block = BLOCKS.find(b=>b.id===l.blockId);
     const sty = SESSION_STYLE[l.sessionType];
-    const diffSummary = l.results.map(r=> r.difficulty==='facile'?'😌':r.difficulty==='dur'?'😤':'👍').join(' ');
+    const diffSummary = l.results.map(r=> diffIconHtml(r.difficulty)).join('');
     const row = document.createElement('div');
     row.className='hist-item';
     row.innerHTML = `
       <span class="hist-dot" style="background:${sty.ink}"></span>
       <span class="d1">${l.date}</span>
-      <span class="d2">${l.sessionType} · ${block?block.name:''} — ${diffSummary}</span>`;
+      <span class="d2">${l.sessionType} · ${block?block.name:''} <span class="hist-diffs">${diffSummary}</span></span>`;
     list.appendChild(row);
   });
 }
@@ -848,6 +917,7 @@ document.querySelectorAll('.navbtn').forEach(b=>{
 });
 
 function renderAll(){
+  mountStaticIcons();
   renderHeader();
   renderProgramme();
   renderProgression();
