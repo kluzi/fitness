@@ -4,131 +4,192 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Muscu Plan — 16 semaines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0f1220;
-    --bg-card:#1a1e33;
-    --bg-card-2:#212747;
-    --accent:#ff5f6d;
-    --accent2:#ffc93c;
-    --accent3:#4fd1c5;
-    --accent4:#6c8cff;
-    --text:#f4f5fb;
-    --text-dim:#9aa0c3;
-    --ok:#4fd1c5;
-    --warn:#ffc93c;
-    --bad:#ff5f6d;
-    --radius:16px;
+    --bg:#F5F4F0;
+    --surface:#FFFFFF;
+    --surface-2:#EFEEE9;
+    --ink:#15171B;
+    --ink-dim:#8A8D93;
+    --line:rgba(21,23,27,0.08);
+    --accent:#C6F24E;
+    --accent-ink:#3F6212;
+    --ok-bg:#DFF3D2;
+    --ok-ink:#2F9E58;
+    --warn-bg:#FFF1CE;
+    --warn-ink:#A66A00;
+    --bad-bg:#FFE1DA;
+    --bad-ink:#D8432B;
+    --shadow:0 2px 14px rgba(21,23,27,0.06), 0 1px 2px rgba(21,23,27,0.05);
+    --r-lg:24px;
+    --r-md:18px;
+    --r-sm:12px;
+    --r-pill:999px;
     font-size:16px;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
-  body{
-    padding-bottom:84px;
-    background:
-      radial-gradient(circle at 15% 0%, rgba(255,95,109,0.25), transparent 45%),
-      radial-gradient(circle at 90% 10%, rgba(108,140,255,0.2), transparent 40%),
-      var(--bg);
-    min-height:100vh;
-  }
-  .wrap{max-width:560px;margin:0 auto;padding:16px 14px 8px;}
-  header.top{padding:18px 16px 10px;max-width:560px;margin:0 auto;}
-  header.top h1{font-size:1.3rem;margin:0 0 2px;display:flex;align-items:center;gap:8px;}
-  header.top .sub{color:var(--text-dim);font-size:0.85rem;}
-  .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-  .pill{background:var(--bg-card);border:1px solid rgba(255,255,255,0.06);border-radius:999px;padding:6px 12px;font-size:0.78rem;color:var(--text-dim);display:flex;align-items:center;gap:6px;}
-  .pill b{color:var(--text);}
-  .card{background:var(--bg-card);border-radius:var(--radius);padding:16px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.05);}
-  .card h2{font-size:1.05rem;margin:0 0 10px;display:flex;align-items:center;gap:8px;}
-  .card h3{font-size:0.95rem;margin:0 0 6px;color:var(--text);}
-  .muted{color:var(--text-dim);font-size:0.85rem;}
-  .block-card{border-left:4px solid var(--accent4);}
-  .block-card.active{border-left:4px solid var(--accent2);box-shadow:0 0 0 1px rgba(255,201,60,0.3);}
-  .block-card.done{border-left:4px solid var(--ok);opacity:0.75;}
-  .block-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
-  .badge-status{font-size:0.7rem;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,0.08);}
-  .badge-status.active{background:rgba(255,201,60,0.2);color:var(--accent2);}
-  .badge-status.done{background:rgba(79,209,197,0.2);color:var(--ok);}
-  .session-mini{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:0.85rem;}
-  .session-mini:first-of-type{border-top:none;}
-  .session-tag{display:inline-block;width:22px;height:22px;border-radius:6px;text-align:center;line-height:22px;font-size:0.75rem;font-weight:700;margin-right:8px;}
-  .tag-A{background:rgba(255,95,109,0.25);color:var(--accent);}
-  .tag-B{background:rgba(79,209,197,0.25);color:var(--accent3);}
-  .tag-C{background:rgba(108,140,255,0.25);color:var(--accent4);}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  body{padding-bottom:104px;min-height:100vh;}
+  .wrap{max-width:560px;margin:0 auto;padding:14px 14px 8px;}
+  header.top{max-width:560px;margin:0 auto;padding:16px 14px 0;}
+  .brand-tag{font-size:0.72rem;font-weight:700;letter-spacing:0.02em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:6px;}
 
-  .session-picker{display:flex;gap:8px;margin-bottom:14px;}
-  .session-btn{flex:1;background:var(--bg-card);border:2px solid transparent;border-radius:var(--radius);padding:12px 8px;text-align:center;color:var(--text);cursor:pointer;font-size:0.85rem;}
-  .session-btn .big{font-size:1.4rem;display:block;margin-bottom:4px;}
-  .session-btn.sel-A{border-color:var(--accent);}
-  .session-btn.sel-B{border-color:var(--accent3);}
-  .session-btn.sel-C{border-color:var(--accent4);}
+  .card{background:var(--surface);border-radius:var(--r-lg);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);}
+  .card h2{font-size:1.02rem;margin:0 0 10px;font-weight:800;}
+  .muted{color:var(--ink-dim);font-size:0.85rem;}
 
-  .warn-banner{background:rgba(255,201,60,0.15);border:1px solid rgba(255,201,60,0.4);color:var(--accent2);border-radius:12px;padding:10px 12px;font-size:0.82rem;margin-bottom:14px;}
+  /* header card */
+  .header-card{padding:18px 18px 14px;}
+  .header-top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .header-card h1{font-size:1.28rem;margin:0 0 2px;font-weight:800;letter-spacing:-0.01em;}
+  .header-sub{color:var(--ink-dim);font-size:0.82rem;font-weight:600;}
+  .ring{width:60px;height:60px;border-radius:50%;flex-shrink:0;
+    background:conic-gradient(var(--accent) calc(var(--pct)*1%), var(--surface-2) 0);
+    display:flex;align-items:center;justify-content:center;}
+  .ring-inner{width:46px;height:46px;border-radius:50%;background:var(--surface);
+    display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:800;color:var(--ink);}
+  .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  .pill{background:var(--surface-2);border-radius:var(--r-pill);padding:7px 13px;font-size:0.76rem;
+    color:var(--ink-dim);font-weight:600;display:flex;align-items:center;gap:6px;}
+  .pill b{color:var(--ink);font-weight:800;}
 
-  .exercise{background:var(--bg-card);border-radius:var(--radius);padding:14px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.05);}
-  .exercise.done{opacity:0.55;}
-  .exercise .ex-head{display:flex;justify-content:space-between;align-items:flex-start;}
-  .exercise .ex-name{font-weight:700;font-size:1rem;}
-  .exercise .ex-group{color:var(--text-dim);font-size:0.75rem;}
-  .exercise .ex-target{font-size:0.85rem;color:var(--accent2);margin-top:4px;}
-  .check-mark{font-size:1.3rem;}
-  .set-row{display:flex;align-items:center;gap:10px;margin-top:12px;}
-  .set-dots{display:flex;gap:6px;flex:1;}
-  .dot{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--text-dim);cursor:pointer;user-select:none;}
-  .dot.filled{background:var(--accent4);color:#fff;}
-  .timer-btn{background:var(--accent4);border:none;color:#fff;border-radius:10px;padding:8px 12px;font-size:0.85rem;cursor:pointer;white-space:nowrap;}
-  .timer-display{font-variant-numeric:tabular-nums;font-weight:700;font-size:1.1rem;margin-left:6px;}
+  /* programme */
+  .block-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .block-eyebrow{font-size:0.68rem;font-weight:800;letter-spacing:0.04em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:3px;}
+  .block-top h2{margin:0;font-size:1.08rem;font-weight:800;}
+  .status-pill{font-size:0.68rem;font-weight:800;padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap;}
+  .status-active{background:var(--accent);color:var(--accent-ink);}
+  .status-done{background:var(--ink);color:#fff;}
+  .status-upcoming{background:var(--surface-2);color:var(--ink-dim);}
+  .block-progress{height:6px;border-radius:var(--r-pill);background:var(--surface-2);margin:12px 0 14px;overflow:hidden;}
+  .block-progress-fill{height:100%;background:var(--accent);border-radius:var(--r-pill);}
+  .session-rows{display:flex;flex-direction:column;gap:10px;}
+  .session-row{display:flex;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--line);}
+  .session-row:first-child{padding-top:0;border-top:none;}
+  .session-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:1.05rem;flex-shrink:0;}
+  .session-row-title{font-weight:700;font-size:0.88rem;}
+  .session-row-sub{font-size:0.75rem;color:var(--ink-dim);margin-top:1px;line-height:1.35;}
+
+  /* séance */
+  .segmented{display:flex;background:var(--surface-2);border-radius:var(--r-pill);padding:5px;gap:4px;margin-bottom:16px;}
+  .seg-btn{flex:1;border:none;background:transparent;border-radius:var(--r-pill);padding:10px 4px;
+    font-size:0.76rem;font-weight:700;color:var(--ink-dim);display:flex;flex-direction:column;
+    align-items:center;gap:3px;cursor:pointer;font-family:inherit;}
+  .seg-btn .seg-ic{font-size:1.15rem;}
+  .seg-btn.active{background:var(--ink);color:#fff;box-shadow:var(--shadow);}
+
+  .warn-banner{background:var(--warn-bg);color:var(--warn-ink);border-radius:var(--r-md);
+    padding:12px 14px;font-size:0.82rem;font-weight:600;margin-bottom:14px;line-height:1.4;}
+
+  .exercise{background:var(--surface);border-radius:var(--r-lg);padding:16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .exercise.done{opacity:0.6;}
+  .ex-head{display:flex;align-items:flex-start;gap:12px;}
+  .ex-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;flex-shrink:0;}
+  .ex-info{flex:1;}
+  .ex-name{font-weight:800;font-size:1rem;}
+  .ex-group{color:var(--ink-dim);font-size:0.76rem;margin-top:1px;}
+  .ex-check{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+    display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:800;flex-shrink:0;}
+  .ex-target-row{margin-top:10px;}
+  .ex-target-badge{display:inline-block;background:var(--surface-2);color:var(--ink);font-weight:700;
+    font-size:0.78rem;padding:6px 12px;border-radius:var(--r-pill);}
+  .set-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;}
+  .set-dots{display:flex;gap:7px;flex:1;flex-wrap:wrap;}
+  .dot{width:30px;height:30px;border-radius:50%;background:var(--surface);border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;
+    color:var(--ink-dim);cursor:pointer;user-select:none;flex-shrink:0;}
+  .dot.filled{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);}
+  .timer-btn{background:var(--ink);border:none;color:#fff;border-radius:var(--r-pill);padding:9px 14px;
+    font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;}
+  .timer-btn:disabled{opacity:0.5;}
+  .timer-display{font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;margin-left:2px;}
   .diff-row{display:flex;gap:8px;margin-top:12px;}
-  .diff-btn{flex:1;border:none;border-radius:10px;padding:9px 4px;font-size:0.78rem;cursor:pointer;color:#111;font-weight:600;}
-  .diff-facile{background:var(--ok);}
-  .diff-parfait{background:var(--accent2);}
-  .diff-dur{background:var(--accent);color:#fff;}
-  .diff-btn.picked{outline:3px solid rgba(255,255,255,0.6);}
+  .diff-btn{flex:1;border:none;border-radius:var(--r-pill);padding:10px 4px;font-size:0.76rem;
+    cursor:pointer;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit;}
+  .diff-facile{background:var(--ok-bg);color:var(--ok-ink);}
+  .diff-parfait{background:var(--warn-bg);color:var(--warn-ink);}
+  .diff-dur{background:var(--bad-bg);color:var(--bad-ink);}
+  .diff-btn.picked{box-shadow:inset 0 0 0 2px currentColor;}
 
-  .finish-btn{width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;color:#111;font-weight:700;padding:14px;border-radius:var(--radius);font-size:1rem;cursor:pointer;margin-top:6px;}
-  .finish-btn:disabled{opacity:0.4;cursor:not-allowed;}
+  .finish-btn{width:100%;background:var(--ink);border:none;color:#fff;font-weight:800;padding:16px;
+    border-radius:var(--r-pill);font-size:0.95rem;cursor:pointer;margin-top:6px;font-family:inherit;}
+  .finish-btn:disabled{background:var(--surface-2);color:var(--ink-dim);cursor:not-allowed;}
 
-  .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
-  .stat-box{background:var(--bg-card);border-radius:14px;padding:12px 8px;text-align:center;}
-  .stat-box .num{font-size:1.4rem;font-weight:800;color:var(--accent2);}
-  .stat-box .lbl{font-size:0.7rem;color:var(--text-dim);}
+  /* progression */
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .stat-card{background:var(--surface);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow);}
+  .stat-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-size:0.95rem;margin-bottom:10px;}
+  .stat-num{font-size:1.3rem;font-weight:800;letter-spacing:-0.01em;}
+  .stat-lbl{font-size:0.72rem;color:var(--ink-dim);font-weight:600;margin-top:2px;}
 
-  .bars{display:flex;align-items:flex-end;gap:6px;height:110px;margin:10px 0 4px;}
-  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
-  .bar{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--accent4),var(--accent3));min-height:4px;}
-  .bar-lbl{font-size:0.6rem;color:var(--text-dim);margin-top:4px;}
+  .bars{display:flex;align-items:flex-end;gap:8px;height:120px;margin:14px 0 4px;padding-top:22px;}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    height:100%;position:relative;}
+  .bar-count{font-size:0.62rem;font-weight:800;color:var(--ink-dim);margin-bottom:4px;height:12px;}
+  .bar-col.current .bar-count{color:var(--ink);}
+  .bar{width:100%;max-width:26px;border-radius:8px 8px 4px 4px;background:var(--surface-2);min-height:5px;}
+  .bar.has-sessions{background:var(--accent);}
+  .bar-col.current .bar.has-sessions{background:var(--ink);}
+  .bar-lbl{font-size:0.62rem;color:var(--ink-dim);margin-top:6px;font-weight:600;}
 
-  .badges{display:flex;flex-wrap:wrap;gap:8px;}
-  .badge{background:var(--bg-card-2);border-radius:12px;padding:10px;text-align:center;width:76px;font-size:0.65rem;color:var(--text-dim);}
-  .badge.unlocked{color:var(--text);box-shadow:0 0 0 2px var(--accent2) inset;}
-  .badge .ic{font-size:1.6rem;display:block;margin-bottom:4px;filter:grayscale(1);opacity:0.4;}
-  .badge.unlocked .ic{filter:none;opacity:1;}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;}
+  .badge{background:var(--surface-2);border-radius:var(--r-md);padding:12px 8px;text-align:center;
+    width:78px;font-size:0.64rem;font-weight:700;color:var(--ink-dim);}
+  .badge.unlocked{color:var(--ink);}
+  .badge .ic{width:36px;height:36px;border-radius:50%;background:var(--surface);display:flex;
+    align-items:center;justify-content:center;font-size:1.25rem;margin:0 auto 6px;opacity:0.4;filter:grayscale(1);}
+  .badge.unlocked .ic{opacity:1;filter:none;background:var(--accent);}
 
-  .hist-item{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;}
+  .hist-item{display:flex;align-items:center;gap:9px;padding:10px 0;border-top:1px solid var(--line);font-size:0.82rem;}
   .hist-item:first-child{border-top:none;}
-  .hist-item .d1{color:var(--text-dim);}
+  .hist-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .hist-item .d1{color:var(--ink-dim);font-weight:600;font-size:0.76rem;min-width:78px;}
+  .hist-item .d2{font-weight:600;}
 
-  nav.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(15,18,32,0.95);backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,0.08);display:flex;z-index:50;}
-  nav.bottom button{flex:1;background:none;border:none;color:var(--text-dim);padding:10px 4px 8px;font-size:0.7rem;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;}
-  nav.bottom button .ic{font-size:1.3rem;}
-  nav.bottom button.active{color:var(--accent2);}
+  nav.bottom{position:fixed;bottom:14px;left:14px;right:14px;max-width:532px;margin:0 auto;
+    background:var(--surface);border-radius:var(--r-pill);box-shadow:var(--shadow);
+    display:flex;padding:6px;z-index:50;}
+  nav.bottom button{flex:1;background:none;border:none;color:var(--ink-dim);padding:10px 4px;
+    font-size:0.68rem;font-weight:700;border-radius:var(--r-pill);display:flex;flex-direction:column;
+    align-items:center;gap:3px;cursor:pointer;font-family:inherit;}
+  nav.bottom button .ic{font-size:1.2rem;}
+  nav.bottom button.active{background:var(--ink);color:#fff;}
 
   .view{display:none;}
   .view.active{display:block;}
 
-  select.block-select, select.session-select-week{background:var(--bg-card);color:var(--text);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 10px;font-size:0.85rem;width:100%;margin-bottom:10px;}
-  button.reset-btn{background:none;border:1px solid rgba(255,95,109,0.4);color:var(--accent);border-radius:10px;padding:8px 12px;font-size:0.78rem;cursor:pointer;width:100%;margin-top:6px;}
+  button.reset-btn{background:transparent;border:1.5px solid var(--bad-ink);color:var(--bad-ink);
+    border-radius:var(--r-pill);padding:11px 12px;font-size:0.8rem;font-weight:700;cursor:pointer;
+    width:100%;margin-top:6px;font-family:inherit;}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1>💪 Muscu Plan</h1>
-  <div class="sub" id="headerSub">—</div>
-  <div class="pill-row" id="headerPills"></div>
+  <div class="brand-tag">💪 Muscu Plan</div>
 </header>
 
 <div class="wrap">
+
+  <div class="card header-card">
+    <div class="header-top-row">
+      <div>
+        <h1 id="hBlockName">—</h1>
+        <div class="header-sub" id="hWeekLine">—</div>
+      </div>
+      <div class="ring" id="weekRing" style="--pct:0">
+        <div class="ring-inner"><span id="ringLabel">0/3</span></div>
+      </div>
+    </div>
+    <div class="pill-row" id="headerPills"></div>
+  </div>
 
   <section id="view-programme" class="view">
     <div id="programmeList"></div>
@@ -136,7 +197,7 @@
 
   <section id="view-seance" class="view">
     <div id="warnBanner"></div>
-    <div class="session-picker" id="sessionPicker"></div>
+    <div class="segmented" id="sessionPicker"></div>
     <div id="exerciseList"></div>
     <button class="finish-btn" id="finishBtn" disabled>Termine tous les exercices d'abord</button>
   </section>
@@ -144,7 +205,7 @@
   <section id="view-progression" class="view">
     <div class="stat-grid" id="statGrid"></div>
     <div class="card">
-      <h2>📊 Séances / semaine (8 dernières)</h2>
+      <h2>📊 Séances / semaine</h2>
       <div class="bars" id="barsChart"></div>
     </div>
     <div class="card">
@@ -257,7 +318,12 @@ const SESSION_LABELS = {
   B:'Jambes light + gainage',
   C:'Haut du corps (tirage) + full body',
 };
-const SESSION_ICONS = { A:'💥', B:'🦵', C:'🔙' };
+const SESSION_ICONS = { A:'💥', B:'🦵', C:'⬅️' };
+const SESSION_STYLE = {
+  A:{ bg:'#FFE4D6', ink:'#E1592E', short:'Poussée' },
+  B:{ bg:'#DFF3D2', ink:'#3E8E41', short:'Jambes'  },
+  C:{ bg:'#E6E1FB', ink:'#6C56D8', short:'Tirage'  },
+};
 
 const BADGE_DEFS = [
   { id:'b1', ic:'🥉', label:'Bloc 1', need:10 },
@@ -341,6 +407,10 @@ function nextRace(){
   const upcoming = RACES.filter(r=>daysBetween(t,r.date) >= 0).sort((a,b)=>daysBetween(t,a.date)-daysBetween(t,b.date));
   return upcoming[0] || null;
 }
+function weekOfDate(dateStr){
+  const diff = daysBetween(state.startDate, dateStr);
+  return Math.min(16, Math.max(1, Math.floor(diff/7)+1));
+}
 
 /* ---------------------------------------------------------------
    HEADER
@@ -348,8 +418,14 @@ function nextRace(){
 function renderHeader(){
   const w = currentWeekNumber();
   const block = blockForWeek(w);
-  document.getElementById('headerSub').textContent =
-    `Semaine ${w}/16 — Bloc ${blockIndex(block.id)+1} : ${block.name}`;
+  document.getElementById('hBlockName').textContent = `Bloc ${blockIndex(block.id)+1} · ${block.name}`;
+  document.getElementById('hWeekLine').textContent = `Semaine ${w}/16`;
+
+  const sessionsThisWeek = state.log.filter(l=>weekOfDate(l.date)===w).length;
+  const pct = Math.min(100, Math.round((sessionsThisWeek/3)*100));
+  const ring = document.getElementById('weekRing');
+  ring.style.setProperty('--pct', pct);
+  document.getElementById('ringLabel').textContent = `${sessionsThisWeek}/3`;
 
   const pills = document.getElementById('headerPills');
   pills.innerHTML='';
@@ -358,18 +434,9 @@ function renderHeader(){
     const d = daysBetween(todayStr(), race.date);
     const p = document.createElement('div');
     p.className='pill';
-    p.innerHTML = `🏁 <b>${race.name}</b> dans ${d} j`;
+    p.innerHTML = `🏁 <b>${race.name}</b> · dans ${d} j`;
     pills.appendChild(p);
   }
-  const sessionsThisWeek = state.log.filter(l=>weekOfDate(l.date)===w).length;
-  const p2 = document.createElement('div');
-  p2.className='pill';
-  p2.innerHTML = `✅ <b>${sessionsThisWeek}/3</b> séances cette semaine`;
-  pills.appendChild(p2);
-}
-function weekOfDate(dateStr){
-  const diff = daysBetween(state.startDate, dateStr);
-  return Math.min(16, Math.max(1, Math.floor(diff/7)+1));
 }
 
 /* ---------------------------------------------------------------
@@ -384,34 +451,40 @@ function renderProgramme(){
   BLOCKS.forEach((block,i)=>{
     const isActive = block.id===curBlock.id;
     const isDone = block.weeks[block.weeks.length-1] < curWeek && !isActive;
-    const card = document.createElement('div');
-    card.className = 'card block-card' + (isActive?' active':'') + (isDone?' done':'');
+    const statusClass = isActive ? 'status-active' : (isDone?'status-done':'status-upcoming');
     const statusLabel = isActive ? 'En cours' : (isDone ? 'Terminé' : `S${block.weeks[0]}-${block.weeks[block.weeks.length-1]}`);
-    const statusClass = isActive ? 'active' : (isDone?'done':'');
+    const sessionsLogged = state.log.filter(l=>l.blockId===block.id).length;
+    const progressPct = Math.min(100, Math.round((sessionsLogged/12)*100));
+
+    const card = document.createElement('div');
+    card.className = 'card';
     card.innerHTML = `
-      <div class="block-header">
-        <h2>Bloc ${i+1} — ${block.name}</h2>
-        <span class="badge-status ${statusClass}">${statusLabel}</span>
+      <div class="block-top">
+        <div>
+          <div class="block-eyebrow">Semaines ${block.weeks[0]} à ${block.weeks[block.weeks.length-1]}</div>
+          <h2>Bloc ${i+1} · ${block.name}</h2>
+        </div>
+        <span class="status-pill ${statusClass}">${statusLabel}</span>
       </div>
-      <div class="muted">Semaines ${block.weeks[0]} à ${block.weeks[block.weeks.length-1]}</div>
-      <div id="sessions-${block.id}"></div>
+      <div class="block-progress"><div class="block-progress-fill" style="width:${progressPct}%"></div></div>
+      <div class="session-rows" id="sessions-${block.id}"></div>
     `;
     list.appendChild(card);
     const sessWrap = card.querySelector(`#sessions-${block.id}`);
     ['A','B','C'].forEach(type=>{
       const entries = block.sessions[type];
       const names = entries.map(e=>EXERCISES[e.id].name).join(', ');
+      const sty = SESSION_STYLE[type];
       const row = document.createElement('div');
-      row.className='session-mini';
-      row.innerHTML = `<span><span class="session-tag tag-${type}">${type}</span>${SESSION_LABELS[type]}</span>`;
+      row.className='session-row';
+      row.innerHTML = `
+        <span class="session-icon" style="background:${sty.bg};color:${sty.ink}">${SESSION_ICONS[type]}</span>
+        <div class="session-row-text">
+          <div class="session-row-title">${type} · ${SESSION_LABELS[type]}</div>
+          <div class="session-row-sub">${names}</div>
+        </div>
+      `;
       sessWrap.appendChild(row);
-      const sub = document.createElement('div');
-      sub.className='muted';
-      sub.style.paddingLeft='30px';
-      sub.style.marginTop='-4px';
-      sub.style.marginBottom='4px';
-      sub.textContent = names;
-      sessWrap.appendChild(sub);
     });
   });
 }
@@ -430,9 +503,10 @@ function renderSessionPicker(){
   const picker = document.getElementById('sessionPicker');
   picker.innerHTML='';
   ['A','B','C'].forEach(type=>{
-    const btn = document.createElement('div');
-    btn.className = 'session-btn' + (currentSessionType===type ? ' sel-'+type : '');
-    btn.innerHTML = `<span class="big">${SESSION_ICONS[type]}</span>${type} · ${SESSION_LABELS[type].split(' ')[0]}`;
+    const sty = SESSION_STYLE[type];
+    const btn = document.createElement('button');
+    btn.className = 'seg-btn' + (currentSessionType===type ? ' active' : '');
+    btn.innerHTML = `<span class="seg-ic">${SESSION_ICONS[type]}</span>${sty.short}`;
     btn.onclick = ()=>{ currentSessionType = type; sessionResults = {}; renderSeanceView(); };
     picker.appendChild(btn);
   });
@@ -456,6 +530,7 @@ function renderExerciseList(){
   const container = document.getElementById('exerciseList');
   container.innerHTML='';
   const entries = block.sessions[currentSessionType];
+  const sty = SESSION_STYLE[currentSessionType];
 
   entries.forEach(entry=>{
     const def = EXERCISES[entry.id];
@@ -466,27 +541,26 @@ function renderExerciseList(){
 
     const card = document.createElement('div');
     card.className = 'exercise' + (done?' done':'');
-    const targetLabel = def.type==='hold'
-      ? `${prog.sets} séries × ${prog.target}${def.unit==='sec / jambe' || def.unit==='sec / côté' ? '' : ''} ${def.unit}`
-      : `${prog.sets} séries × ${prog.target} ${def.unit}`;
+    const targetLabel = `${prog.sets} séries × ${prog.target} ${def.unit}`;
 
     card.innerHTML = `
       <div class="ex-head">
-        <div>
+        <span class="ex-icon" style="background:${sty.bg};color:${sty.ink}">${SESSION_ICONS[currentSessionType]}</span>
+        <div class="ex-info">
           <div class="ex-name">${def.name}</div>
           <div class="ex-group">${def.group} · ${variantLabel}</div>
-          <div class="ex-target">🎯 ${targetLabel}</div>
         </div>
-        <div class="check-mark">${done ? '✅' : ''}</div>
+        ${done ? '<div class="ex-check">✓</div>' : ''}
       </div>
+      <div class="ex-target-row"><span class="ex-target-badge">🎯 ${targetLabel}</span></div>
       <div class="set-row">
         <div class="set-dots" data-ex="${entry.id}"></div>
         ${def.type==='hold' ? `<button class="timer-btn" data-timer="${entry.id}">⏱ ${prog.target}s</button><span class="timer-display" data-timerdisplay="${entry.id}"></span>` : ''}
       </div>
       <div class="diff-row" data-diff="${entry.id}">
-        <button class="diff-btn diff-facile" data-d="facile">😌 Trop facile</button>
-        <button class="diff-btn diff-parfait" data-d="parfait">👍 Parfait</button>
-        <button class="diff-btn diff-dur" data-d="dur">😤 Trop dur</button>
+        <button class="diff-btn diff-facile" data-d="facile"><span>😌</span>Facile</button>
+        <button class="diff-btn diff-parfait" data-d="parfait"><span>👍</span>Parfait</button>
+        <button class="diff-btn diff-dur" data-d="dur"><span>😤</span>Dur</button>
       </div>
     `;
     container.appendChild(card);
@@ -659,11 +733,31 @@ function renderStatGrid(){
   let streak = 0;
   for(let w=curW; w>=1; w--){ if((weeksMap[w]||0)>=3) streak++; else break; }
   const thisWeek = weeksMap[curW] || 0;
+  const race = nextRace();
+  const raceLbl = race ? `${daysBetween(todayStr(), race.date)}j` : '—';
+  const raceName = race ? race.name : 'Aucune course prévue';
 
   grid.innerHTML = `
-    <div class="stat-box"><div class="num">${total}</div><div class="lbl">Séances totales</div></div>
-    <div class="stat-box"><div class="num">${thisWeek}/3</div><div class="lbl">Cette semaine</div></div>
-    <div class="stat-box"><div class="num">${streak}</div><div class="lbl">Semaines à 3/3 d'affilée</div></div>
+    <div class="stat-card">
+      <span class="stat-ic" style="background:#E6E1FB;color:#6C56D8">🏋️</span>
+      <div class="stat-num">${total}</div>
+      <div class="stat-lbl">Séances totales</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-ic" style="background:#DFF3D2;color:#3E8E41">✅</span>
+      <div class="stat-num">${thisWeek}/3</div>
+      <div class="stat-lbl">Cette semaine</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-ic" style="background:#FFF1CE;color:#A66A00">🔥</span>
+      <div class="stat-num">${streak}</div>
+      <div class="stat-lbl">Semaines à 3/3 d'affilée</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-ic" style="background:#FFE4D6;color:#E1592E">🏁</span>
+      <div class="stat-num">${raceLbl}</div>
+      <div class="stat-lbl">${raceName}</div>
+    </div>
   `;
 }
 
@@ -677,9 +771,13 @@ function renderBars(){
   for(let w=startW; w<=curW; w++){
     const count = weeksMap[w] || 0;
     const pct = Math.min(100, (count/4)*100);
+    const isCurrent = w===curW;
     const col = document.createElement('div');
-    col.className='bar-col';
-    col.innerHTML = `<div class="bar" style="height:${Math.max(pct,3)}%"></div><div class="bar-lbl">S${w}</div>`;
+    col.className='bar-col' + (isCurrent?' current':'');
+    col.innerHTML = `
+      <div class="bar-count">${count>0?count:''}</div>
+      <div class="bar${count>0?' has-sessions':''}" style="height:${Math.max(pct,4)}%"></div>
+      <div class="bar-lbl">S${w}</div>`;
     chart.appendChild(col);
   }
 }
@@ -706,10 +804,14 @@ function renderHistory(){
   }
   sorted.slice(0,30).forEach(l=>{
     const block = BLOCKS.find(b=>b.id===l.blockId);
+    const sty = SESSION_STYLE[l.sessionType];
     const diffSummary = l.results.map(r=> r.difficulty==='facile'?'😌':r.difficulty==='dur'?'😤':'👍').join(' ');
     const row = document.createElement('div');
     row.className='hist-item';
-    row.innerHTML = `<span class="d1">${l.date}</span><span><span class="session-tag tag-${l.sessionType}">${l.sessionType}</span>${block?block.name:''} — ${diffSummary}</span>`;
+    row.innerHTML = `
+      <span class="hist-dot" style="background:${sty.ink}"></span>
+      <span class="d1">${l.date}</span>
+      <span class="d2">${l.sessionType} · ${block?block.name:''} — ${diffSummary}</span>`;
     list.appendChild(row);
   });
 }
