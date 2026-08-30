@@ -147,15 +147,6 @@
   .bar-col.current .bar.has-sessions{background:var(--ink);}
   .bar-lbl{font-size:0.62rem;color:var(--ink-dim);margin-top:6px;font-weight:600;}
 
-  .badges{display:flex;flex-wrap:wrap;gap:10px;}
-  .badge{background:var(--surface-2);border-radius:var(--r-md);padding:12px 8px;text-align:center;
-    width:78px;font-size:0.64rem;font-weight:700;color:var(--ink-dim);}
-  .badge.unlocked{color:var(--ink);}
-  .badge .ic{width:36px;height:36px;border-radius:50%;background:var(--surface);display:flex;
-    align-items:center;justify-content:center;margin:0 auto 6px;opacity:0.4;}
-  .badge .ic svg{width:19px;height:19px;}
-  .badge.unlocked .ic{opacity:1;background:var(--accent);color:var(--accent-ink);}
-
   .hist-item{display:flex;align-items:center;gap:9px;padding:10px 0;border-top:1px solid var(--line);font-size:0.82rem;}
   .hist-item:first-child{border-top:none;}
   .hist-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
@@ -236,10 +227,6 @@
       <div class="bars" id="barsChart"></div>
     </div>
     <div class="card">
-      <h2><span id="icBadges"></span>Badges</h2>
-      <div class="badges" id="badgesRow"></div>
-    </div>
-    <div class="card">
       <h2><span id="icHistory"></span>Historique</h2>
       <div id="historyList"></div>
     </div>
@@ -271,7 +258,6 @@ const ICONS = {
   alert: '<path d="M12 3.5 L21 19.5 L3 19.5 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="12" y1="9.5" x2="12" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/>',
   calendar: '<rect x="3.5" y="5.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="3.5" y1="10" x2="20.5" y2="10" stroke="currentColor" stroke-width="1.8"/><line x1="8" y1="3.5" x2="8" y2="7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="3.5" x2="16" y2="7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
   trending: '<polyline points="4,17 9,11 13,14 20,6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="14,6 20,6 20,12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  award: '<circle cx="12" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3"/><path d="M8.5 14 L6 21 L12 18 L18 21 L15.5 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>',
   target: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5.3" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1.6"/>',
   clock: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="12" y1="12" x2="12" y2="7.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="12" x2="15.5" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
   chevronsUp: '<polyline points="6,13.5 12,7.5 18,13.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><polyline points="6,19 12,13 18,19" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -289,7 +275,6 @@ function mountStaticIcons(){
   document.getElementById('navIcSeance').innerHTML = icon('dumbbell');
   document.getElementById('navIcProgression').innerHTML = icon('trending');
   document.getElementById('icBars').innerHTML = icon('barChart');
-  document.getElementById('icBadges').innerHTML = icon('award');
   document.getElementById('icHistory').innerHTML = icon('folder');
   document.getElementById('icScale').innerHTML = icon('scale');
 }
@@ -390,14 +375,6 @@ const SESSION_STYLE = {
   C:{ bg:'#E6E1FB', ink:'#6C56D8', short:'Tirage'  },
 };
 
-const BADGE_DEFS = [
-  { id:'b1', icon:'award', label:'Bloc 1', need:10 },
-  { id:'b2', icon:'award', label:'Bloc 2', need:22 },
-  { id:'b3', icon:'award', label:'Bloc 3', need:34 },
-  { id:'b4', icon:'award', label:'Bloc 4', need:46 },
-  { id:'streak4', icon:'flame', label:'4 sem. suivies', need:null },
-];
-
 const DIFF_META = {
   facile:  { icon:'checkCircle', label:'Facile',  varInk:'var(--ok-ink)'   },
   parfait: { icon:'star',        label:'Parfait', varInk:'var(--warn-ink)' },
@@ -419,7 +396,6 @@ function defaultState(){
     startDate: START_DATE,
     log: [],            // {date, blockId, sessionType, results:[{exerciseId,difficulty}]}
     exerciseProgress: {},
-    badges: {},
     weights: {},         // { [weekNumber]: kg }
   };
 }
@@ -790,7 +766,6 @@ document.getElementById('finishBtn').addEventListener('click', ()=>{
     sessionType: currentSessionType,
     results,
   });
-  updateBadges();
   saveState();
   sessionResults = {};
   renderHeader();
@@ -808,32 +783,6 @@ function renderSeanceView(){
 /* ---------------------------------------------------------------
    VUE PROGRESSION
 --------------------------------------------------------------- */
-function updateBadges(){
-  const countsByBlock = {};
-  BLOCKS.forEach(b=> countsByBlock[b.id]=0);
-  state.log.forEach(l=> countsByBlock[l.blockId] = (countsByBlock[l.blockId]||0)+1);
-
-  BADGE_DEFS.forEach(bd=>{
-    if(bd.need==null) return;
-    const bid = bd.id;
-    const total = BLOCKS.slice(0, blockIndex(bid)+1).reduce((acc,b)=> acc + (countsByBlock[b.id]||0), 0);
-    if(total >= bd.need) state.badges[bd.id]=true;
-  });
-
-  // streak: 4 semaines consécutives avec >=3 séances
-  const weeksMap = {};
-  state.log.forEach(l=>{
-    const w = weekOfDate(l.date);
-    weeksMap[w] = (weeksMap[w]||0)+1;
-  });
-  const curW = currentWeekNumber();
-  let streak = 0;
-  for(let w=curW; w>=1; w--){
-    if((weeksMap[w]||0) >= 3) streak++; else break;
-  }
-  if(streak>=4) state.badges['streak4']=true;
-}
-
 function renderStatGrid(){
   const grid = document.getElementById('statGrid');
   const total = state.log.length;
@@ -890,18 +839,6 @@ function renderBars(){
       <div class="bar-lbl">S${w}</div>`;
     chart.appendChild(col);
   }
-}
-
-function renderBadges(){
-  const row = document.getElementById('badgesRow');
-  row.innerHTML='';
-  BADGE_DEFS.forEach(bd=>{
-    const unlocked = !!state.badges[bd.id];
-    const el = document.createElement('div');
-    el.className = 'badge' + (unlocked?' unlocked':'');
-    el.innerHTML = `<span class="ic">${icon(bd.icon)}</span>${bd.label}`;
-    row.appendChild(el);
-  });
 }
 
 function renderHistory(){
@@ -1002,11 +939,9 @@ document.getElementById('weightSaveBtn').addEventListener('click', ()=>{
 });
 
 function renderProgression(){
-  updateBadges();
   renderStatGrid();
   renderWeightCard();
   renderBars();
-  renderBadges();
   renderHistory();
 }
 
