@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Muscu Plan — 16 semaines</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -34,8 +35,7 @@
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
     font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
   body{padding-bottom:104px;min-height:100vh;}
-  .wrap{max-width:560px;margin:0 auto;padding:14px 14px 8px;}
-  header.top{max-width:560px;margin:0 auto;padding:20px 14px 0;}
+  .wrap{max-width:560px;margin:0 auto;padding:22px 14px 8px;}
 
   .icon{display:block;}
   svg.icon{overflow:visible;}
@@ -44,18 +44,6 @@
   .card h2{font-size:1.02rem;margin:0 0 10px;font-weight:800;display:flex;align-items:center;gap:7px;}
   .card h2 svg{width:18px;height:18px;flex-shrink:0;}
   .muted{color:var(--ink-dim);font-size:0.85rem;}
-
-  /* hero */
-  .hero-eyebrow{display:flex;align-items:center;gap:8px;font-size:0.72rem;font-weight:800;
-    letter-spacing:0.06em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:8px;}
-  .hero-eyebrow::before{content:'';width:16px;height:2px;background:var(--ink-dim);flex-shrink:0;}
-  header.top h1{font-size:1.6rem;margin:0 0 4px;font-weight:800;letter-spacing:-0.02em;}
-  .header-sub{color:var(--ink-dim);font-size:0.85rem;font-weight:600;}
-  .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px;}
-  .pill{background:var(--surface-2);border-radius:var(--r-pill);padding:7px 13px;font-size:0.76rem;
-    color:var(--ink-dim);font-weight:600;display:flex;align-items:center;gap:7px;}
-  .pill svg{width:14px;height:14px;flex-shrink:0;}
-  .pill b{color:var(--ink);font-weight:800;}
 
   /* programme */
   .block-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
@@ -212,13 +200,6 @@
 </head>
 <body>
 
-<header class="top">
-  <div class="hero-eyebrow">Programme de renforcement</div>
-  <h1 id="hBlockName">—</h1>
-  <div class="header-sub" id="hWeekLine">—</div>
-  <div class="pill-row" id="headerPills"></div>
-</header>
-
 <div class="wrap">
 
   <div class="hero-stats" id="heroStats"></div>
@@ -230,6 +211,7 @@
   <section id="view-seance" class="view">
     <div id="warnBanner"></div>
     <div class="segmented" id="sessionPicker"></div>
+    <div class="muted" style="margin:-8px 0 14px 4px;">Fais les séries d'un exercice en entier (avec repos) avant de passer au suivant.</div>
     <div id="exerciseList"></div>
     <button class="finish-btn" id="finishBtn" disabled>Termine tous les exercices d'abord</button>
   </section>
@@ -534,21 +516,6 @@ function weekRange(weekNum){
 --------------------------------------------------------------- */
 function renderHeader(){
   const w = currentWeekNumber();
-  const block = blockForWeek(w);
-  document.getElementById('hBlockName').textContent = `Bloc ${blockIndex(block.id)+1} · ${block.name}`;
-  document.getElementById('hWeekLine').textContent = `Semaine ${w}/16 · ${weekRange(w).label}`;
-
-  const pills = document.getElementById('headerPills');
-  pills.innerHTML='';
-  const race = nextRace();
-  if(race){
-    const d = daysBetween(todayStr(), race.date);
-    const p = document.createElement('div');
-    p.className='pill';
-    p.innerHTML = `${icon('flag')}<span><b>${race.name}</b> · dans ${d} j</span>`;
-    pills.appendChild(p);
-  }
-
   const sessionsThisWeek = state.log.filter(l=>weekOfDate(l.date)===w).length;
   const totalLogged = state.log.length;
   const completionPct = Math.min(100, Math.round((totalLogged/48)*100));
