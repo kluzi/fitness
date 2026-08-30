@@ -89,10 +89,13 @@
   .ex-check{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
     display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .ex-check svg{width:13px;height:13px;}
-  .ex-target-row{margin-top:10px;}
+  .ex-target-row{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}
   .ex-target-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);color:var(--ink);
-    font-weight:700;font-size:0.78rem;padding:6px 12px;border-radius:var(--r-pill);}
+    font-weight:700;font-size:0.78rem;padding:6px 12px;border-radius:var(--r-pill);border:none;
+    cursor:default;font-family:inherit;}
   .ex-target-badge svg{width:14px;height:14px;flex-shrink:0;}
+  button.ex-target-badge{cursor:pointer;}
+  button.ex-target-badge:disabled{opacity:0.5;cursor:default;}
   .set-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;}
   .set-dots{display:flex;gap:7px;flex:1;flex-wrap:wrap;}
   .dot{width:30px;height:30px;border-radius:50%;background:var(--surface);border:2px solid var(--line);
@@ -104,9 +107,6 @@
     display:inline-flex;align-items:center;gap:7px;}
   .timer-btn svg{width:14px;height:14px;flex-shrink:0;}
   .timer-btn:disabled{opacity:0.5;}
-  .timer-btn.secondary{background:var(--surface-2);color:var(--ink);}
-  .timer-display{font-variant-numeric:tabular-nums;font-weight:800;font-size:0.95rem;margin-left:2px;}
-  .rest-row{margin-top:8px;display:flex;align-items:center;gap:10px;}
   .diff-row{display:flex;gap:8px;margin-top:12px;}
   .diff-btn{flex:1;border:none;border-radius:var(--r-pill);padding:10px 4px;font-size:0.74rem;
     cursor:pointer;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:inherit;}
@@ -202,9 +202,8 @@
 
 <div class="wrap">
 
-  <div class="hero-stats" id="heroStats"></div>
-
   <section id="view-programme" class="view">
+    <div class="hero-stats" id="heroStats"></div>
     <div id="programmeList"></div>
   </section>
 
@@ -654,14 +653,13 @@ function renderExerciseList(){
         </div>
         ${done ? `<div class="ex-check">${icon('checkMark')}</div>` : ''}
       </div>
-      <div class="ex-target-row"><span class="ex-target-badge">${icon('target')}<span>${targetLabel}</span></span></div>
+      <div class="ex-target-row">
+        <span class="ex-target-badge">${icon('target')}<span>${targetLabel}</span></span>
+        <button class="ex-target-badge rest-btn" data-rest="${entry.id}">${icon('clock')}<span>Repos ${REST_SECONDS}s</span></button>
+      </div>
       <div class="set-row">
         <div class="set-dots" data-ex="${entry.id}"></div>
-        ${def.type==='hold' ? `<button class="timer-btn" data-timer="${entry.id}">${icon('clock')}<span>${prog.target}s</span></button><span class="timer-display" data-timerdisplay="${entry.id}"></span>` : ''}
-      </div>
-      <div class="rest-row">
-        <button class="timer-btn secondary" data-rest="${entry.id}">${icon('clock')}<span>Repos ${REST_SECONDS}s</span></button>
-        <span class="timer-display" data-restdisplay="${entry.id}"></span>
+        ${def.type==='hold' ? `<button class="timer-btn" data-timer="${entry.id}">${icon('clock')}<span>${prog.target}s</span></button>` : ''}
       </div>
       <div class="diff-row" data-diff="${entry.id}">
         <button class="diff-btn diff-facile" data-d="facile"><span class="diff-ic">${icon('checkCircle')}</span><span>Facile</span></button>
@@ -703,29 +701,28 @@ function renderExerciseList(){
 
     if(def.type==='hold'){
       const timerBtn = card.querySelector(`[data-timer="${entry.id}"]`);
-      const timerDisplay = card.querySelector(`[data-timerdisplay="${entry.id}"]`);
-      timerBtn.onclick = ()=> startCountdown(prog.target, timerBtn, timerDisplay);
+      timerBtn.onclick = ()=> startCountdown(prog.target, timerBtn);
     }
     const restBtn = card.querySelector(`[data-rest="${entry.id}"]`);
-    const restDisplay = card.querySelector(`[data-restdisplay="${entry.id}"]`);
-    restBtn.onclick = ()=> startCountdown(REST_SECONDS, restBtn, restDisplay);
+    restBtn.onclick = ()=> startCountdown(REST_SECONDS, restBtn);
   });
 
   updateFinishBtn();
 }
 
-function startCountdown(seconds, btn, display){
+function startCountdown(seconds, btn){
+  const label = btn.querySelector('span');
+  const original = label.textContent;
   let remaining = seconds;
   btn.disabled = true;
-  display.textContent = remaining+'s';
+  label.textContent = remaining+'s';
   const iv = setInterval(()=>{
     remaining--;
-    display.textContent = remaining+'s';
+    label.textContent = remaining>0 ? remaining+'s' : '✔';
     if(remaining<=0){
       clearInterval(iv);
-      display.textContent = '✔';
-      btn.disabled = false;
       beep();
+      setTimeout(()=>{ label.textContent = original; btn.disabled = false; }, 600);
     }
   },1000);
 }
@@ -775,7 +772,7 @@ function updateFinishBtn(){
   btn.disabled = !allDone;
   btn.innerHTML = allDone
     ? `${icon('checkMark')}<span>Terminer la séance</span>`
-    : `<span>Termine tous les exercices d'abord (${Object.values(sessionResults).filter(r=>r.difficulty).length}/${entries.length})</span>`;
+    : `<span>Note la difficulté de chaque exercice (${Object.values(sessionResults).filter(r=>r.difficulty).length}/${entries.length})</span>`;
 }
 
 document.getElementById('finishBtn').addEventListener('click', ()=>{
