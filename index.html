@@ -137,15 +137,16 @@
   .stat-num{font-size:1.3rem;font-weight:800;letter-spacing:-0.01em;}
   .stat-lbl{font-size:0.72rem;color:var(--ink-dim);font-weight:600;margin-top:2px;}
 
-  .bars{display:flex;align-items:flex-end;gap:8px;height:120px;margin:14px 0 4px;padding-top:22px;}
-  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-    height:100%;position:relative;}
-  .bar-count{font-size:0.62rem;font-weight:800;color:var(--ink-dim);margin-bottom:4px;height:12px;}
+  .bars{display:flex;align-items:flex-end;gap:4px;margin:14px 0 4px;padding-top:16px;overflow-x:auto;}
+  .bar-col{flex:0 0 auto;width:16px;display:flex;flex-direction:column;align-items:center;}
+  .bar-count{font-size:0.56rem;font-weight:800;color:var(--ink-dim);margin-bottom:3px;height:10px;}
   .bar-col.current .bar-count{color:var(--ink);}
-  .bar{width:100%;max-width:26px;border-radius:8px 8px 4px 4px;background:var(--surface-2);min-height:5px;}
-  .bar.has-sessions{background:var(--accent);}
-  .bar-col.current .bar.has-sessions{background:var(--ink);}
-  .bar-lbl{font-size:0.62rem;color:var(--ink-dim);margin-top:6px;font-weight:600;}
+  .bar-track{width:100%;height:88px;border-radius:5px;background:var(--surface-2);
+    display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
+  .bar-fill{width:100%;background:var(--accent);border-radius:5px 5px 0 0;}
+  .bar-col.current .bar-fill{background:var(--ink);}
+  .bar-lbl{font-size:0.56rem;color:var(--ink-dim);margin-top:5px;font-weight:600;}
+  .bar-col.current .bar-lbl{color:var(--ink);}
 
   .hist-item{display:flex;align-items:center;gap:9px;padding:10px 0;border-top:1px solid var(--line);font-size:0.82rem;}
   .hist-item:first-child{border-top:none;}
@@ -210,6 +211,10 @@
   <section id="view-progression" class="view">
     <div class="stat-grid" id="statGrid"></div>
     <div class="card">
+      <h2><span id="icBars"></span>Séances / semaine</h2>
+      <div class="bars" id="barsChart"></div>
+    </div>
+    <div class="card">
       <h2><span id="icScale"></span>Poids hebdo</h2>
       <div class="weight-row">
         <div class="weight-input-wrap">
@@ -221,10 +226,6 @@
       <div class="muted" id="weightWeekLabel" style="margin-top:8px;"></div>
       <div class="weight-summary" id="weightSummary"></div>
       <div id="weightChartWrap"></div>
-    </div>
-    <div class="card">
-      <h2><span id="icBars"></span>Séances / semaine</h2>
-      <div class="bars" id="barsChart"></div>
     </div>
     <div class="card">
       <h2><span id="icHistory"></span>Historique</h2>
@@ -749,9 +750,10 @@ function updateFinishBtn(){
   const allDone = entries.every(e=> sessionResults[e.id] && sessionResults[e.id].difficulty);
   const btn = document.getElementById('finishBtn');
   btn.disabled = !allDone;
+  const doneCount = Object.values(sessionResults).filter(r=>r.difficulty).length;
   btn.innerHTML = allDone
-    ? `${icon('checkMark')}<span>Terminer la séance</span>`
-    : `<span>Note la difficulté de chaque exercice (${Object.values(sessionResults).filter(r=>r.difficulty).length}/${entries.length})</span>`;
+    ? `${icon('checkMark')}<span>Enregistrer la séance</span>`
+    : `<span>Enregistrer la séance (${doneCount}/${entries.length})</span>`;
 }
 
 document.getElementById('finishBtn').addEventListener('click', ()=>{
@@ -827,17 +829,16 @@ function renderBars(){
   const curW = currentWeekNumber();
   const weeksMap = {};
   state.log.forEach(l=>{ const w=weekOfDate(l.date); weeksMap[w]=(weeksMap[w]||0)+1; });
-  const startW = Math.max(1, curW-7);
-  for(let w=startW; w<=curW; w++){
+  for(let w=1; w<=16; w++){
     const count = weeksMap[w] || 0;
-    const pct = Math.min(100, (count/4)*100);
+    const pct = Math.min(100, (count/3)*100);
     const isCurrent = w===curW;
     const col = document.createElement('div');
     col.className='bar-col' + (isCurrent?' current':'');
     col.innerHTML = `
       <div class="bar-count">${count>0?count:''}</div>
-      <div class="bar${count>0?' has-sessions':''}" style="height:${Math.max(pct,4)}%"></div>
-      <div class="bar-lbl">S${w}</div>`;
+      <div class="bar-track"><div class="bar-fill" style="height:${pct}%"></div></div>
+      <div class="bar-lbl">${w}</div>`;
     chart.appendChild(col);
   }
 }
